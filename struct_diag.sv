@@ -20,6 +20,7 @@ module struct_diag(
   logic Szero, Mzero, Hzero, 	   // "carry out" from sec -> min, min -> hrs, hrs -> days
         TMen, THen, AMen, AHen; 
 
+logic turnOn; 
 // free-running seconds counter	-- be sure to set parameters on ct_mod_N modules
   ct_mod_N #(.N()) Sct(
     .clk(Pulse), .rst(Reset), .en(1'b1), .ct_out(TSec), .z(Szero)
@@ -62,7 +63,8 @@ module struct_diag(
 
 // buzz off :)	  make the connections
   alarm a1(
-    .tmin(TMin), .amin(Amin), .thrs(THrs), .ahrs(AHrs), .buzz()
+    .tmin(TMin), .amin(Amin), .thrs(THrs), .ahrs(AHrs), .buzz(turnOn)
 	);
 
+assign Buzz = Alarmon & turnOn;
 endmodule
