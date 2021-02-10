@@ -105,7 +105,7 @@ $display("display current time after setting alarm");
     .seg_g(M0disp), .seg_h(S1disp),
     .seg_i(S0disp));
 
-  	#3000ns  $stop;
+  	#10000ns  $stop; //changed from 3000ns to 10000ns --Tom
   end 
   always begin  // period is 2 ns
     #1ns Pulse = 1;

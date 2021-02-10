@@ -67,4 +67,12 @@ logic turnOn;
 	);
 
 assign Buzz = Alarmon & turnOn;
+
+always @(Szero) begin
+	assign TMen = Szero;
+	
+end
+always @(Mzero or Szero) begin
+	assign THen = Mzero && Szero;
+end
 endmodule
