@@ -60,19 +60,33 @@ logic turnOn;
 	.Segment1  (H1disp),
 	.Segment0  (H0disp)
 	);
+always_comb begin
+	if(Alarmset)begin
+		Hrs = AHrs;
+		Min = AMin;
+		//display Hours of alarm
+		//display min of alarm
+	end else begin
+		Hrs = THrs;
+		Min = TMin;
+		//display Hourse of Clock
+		// display Min of clock
+	end	
+end
 
 // buzz off :)	  make the connections
   alarm a1(
     .tmin(TMin), .amin(Amin), .thrs(THrs), .ahrs(AHrs), .buzz(turnOn)
 	);
 
-assign Buzz = Alarmon & turnOn;
+assign Buzz = Alarmon && turnOn;
 
-always @(Szero) begin
-	assign TMen = Szero;
-	
+always_comb begin
+	TMen = Szero ||(Timeset && Minadv);
+	THen =(Mzero && Szero) ||(Timeset && Hrsadv);		
 end
-always @(Mzero or Szero) begin
-	assign THen = Mzero && Szero;
-end
+
+//always @(Mzero or Szero) begin
+//	assign THen = Mzero && Szero;
+//end
 endmodule
