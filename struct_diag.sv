@@ -76,14 +76,18 @@ end
 
 // buzz off :)	  make the connections
   alarm a1(
-    .tmin(TMin), .amin(Amin), .thrs(THrs), .ahrs(AHrs), .buzz(turnOn)
+    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .buzz(turnOn)
 	);
 
 assign Buzz = Alarmon && turnOn;
 
 always_comb begin
-	TMen = Szero ||(Timeset && Minadv);
-	THen =(Mzero && Szero) ||(Timeset && Hrsadv);		
+	TMen = (!Timeset && Szero) ||(Timeset && Minadv);
+	THen =(Mzero && Szero && !Timeset) ||(Timeset && Hrsadv);		
+end
+always_comb begin
+	AMen = Alarmset && Minadv;
+	AHen = Alarmset && Hrsadv;	
 end
 
 //always @(Mzero or Szero) begin
